@@ -1,23 +1,24 @@
-from audioop import mul
-from models.binary_counter import BinaryCounter
-from models.binary_decimal_counter import BinaryDecimalCounter
-from models.reverse_counter import ReverseCounter
-from models.d_trigger import DTrigger
-from models.rs_trigger import RsTrigger
-from models.multiplexer import Multiplexer
-from models.shifting_register import ShiftingRegister
+from models.film import Film
+from models.genre import Genre
+from models.node import Node
 
 def main():
-    b_counter = BinaryCounter('binary counter', 499, 76590)
-    b_d_counter = BinaryDecimalCounter('binary-decimal counter', 799, 45638)
-    reverse_counter = ReverseCounter('reverse counter', 999, 43210, False)
-    d_trigger = DTrigger('D-trigger', 1999.99, False, False)
-    rs_trigger = RsTrigger('RS-trigger', 599, True)
-    multiplexer = Multiplexer('multiplexer', 659, 77)
-    shifting_reg = ShiftingRegister('shifting register', 3899)
-    device_list = [b_counter, b_d_counter, reverse_counter, 
-            d_trigger, rs_trigger, multiplexer, shifting_reg]
-    print(*device_list, sep='\n')
+    film_list = [Film('Divergent', 2014, 140, Genre.FANTASY, 'Lionsgate Films'),
+    Film('Avatar', 2009, 162, Genre.FANTASY, '20th Century Fox'),
+    Film('Green Book', 2018, 130, Genre.DRAMA, 'Universal Pictures'),
+    Film("Hachi: A Dog's Tale", 2009, 93, Genre.DRAMA, '20th Century Studios'),
+    Film('Spirited away', 2001, 125, Genre.ANIMATION, 'Studio Ghibli'),
+    Film('The Intern', 2015, 121, Genre.COMEDY, 'Paramount Pictures')]
+ 
+    root = Node(Film('The Mule', 2018, 116, Genre.CRIME, 'Warner Bros. Pictures'))
+    for film in film_list:
+        root.add(film)
+    root.print()
+    print('='*30,'printing by genre:')
+    root.print_by_genre(Genre.FANTASY)
+    print('='*30,'delete by studio:')
+    root.delete_by_studio('20th Century Fox')
+    root.print()
 
 if __name__ == '__main__':
     main()
